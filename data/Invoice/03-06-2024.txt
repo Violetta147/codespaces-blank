@@ -21,3 +21,26 @@ Bill ID: 320240603
                                                                                                 Sale:          55000
                                                                                              Payment:         165000
                                                                                               Status:           Paid
+Bill ID: 420240603
+               PIN		           Food😋	              Price	          Quantity	           Unit	        Payment	
+                35		        MilkTea💧	              20000	              3	                Cup	          60000	
+                23		Banh Mi Thit Cha🍗	              15000	              5	               Loaf	          75000	
+                                                                                               Total:         135000
+                                                                                                Sale:          34000
+                                                                                             Payment:         101000
+                                                                                              Status:           Paid
+Bill ID: 520240603
+               PIN		           Food😋	              Price	          Quantity	           Unit	        Payment	
+                35		        MilkTea💧	              20000	                 3	            Cup	          60000	
+                23		Banh Mi Thit Cha🍗	              15000	                 5	           Loaf	          75000	
+                                                                                               Total:         135000
+                                                                                                Sale:          34000
+                                                                                             Payment:         101000
+                                                                                              Status:           Paid
+Bill ID: 620240603
+               PIN		           Food😋	              Price	          Quantity	           Unit	        Payment	
+                35		        MilkTea💧	              20000	              2	                Cup	          40000	
+                                                                                               Total:          40000
+                                                                                                Sale:              0
+                                                                                             Payment:          40000
+                                                                                              Status:         Unpaid
