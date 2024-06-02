@@ -1,0 +1,23 @@
+TS code: 20240603
+Bill ID: 120240603
+               PIN		           Food😋	              Price	          Quantity	           Unit	        Payment	
+                45		          Apple🍎	            8000000	              3	                5kg	       24000000	
+                                                                                               Total:       24000000
+                                                                                                Sale:        6000000
+                                                                                             Payment:       18000000
+                                                                                              Status:           Paid
+Bill ID: 220240603
+               PIN		           Food😋	              Price	          Quantity	           Unit	        Payment	
+                45		          Apple🍎	            8000000	              2	                5kg	       16000000	
+                                                                                               Total:       16000000
+                                                                                                Sale:        4000000
+                                                                                             Payment:       12000000
+                                                                                              Status:           Paid
+Bill ID: 320240603
+               PIN		           Food😋	              Price	          Quantity	           Unit	        Payment	
+                35		        MilkTea💧	              20000	              3	                Cup	          60000	
+                32		     Curry Rice🍛	              32000	              5	               Dish	         160000	
+                                                                                               Total:         220000
+                                                                                                Sale:          55000
+                                                                                             Payment:         165000
+                                                                                              Status:           Paid

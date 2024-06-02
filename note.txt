@@ -1,0 +1,25 @@
+7
+16 status
+day dish qua 97 
+for (int k = 14 - strlen(menu.dishes[i].Unit) + 1; k >= 0; k--)
+            {
+                printf(" ");
+            }
+            printf("%8.0f/%s|", menu.dishes[i].Price, menu.dishes[i].Unit);
+
+            printf("\033[%dC", 4);
+    printf("HERE YOU CAN MANAGE YOUR MENU");
+    printf("\033[%dB", 1);
+    printf("\033[%dD", 29);
+    printf("1. Add new food(A)");
+    printf("\033[%dB", 1);
+    printf("\033[%dD", 18);
+    printf("2. Customize food(C)");
+    printf("\033[%dB", 1);
+    printf("\033[%dD", 20);
+    printf("3. Delete food(D)");
+    printf("\033[%dB", 1);
+    printf("\033[%dD", 17);
+    printf("4. Exit(X)");
+    printf("\033[%dD", 101);
+    printf("\033[%dA", 4);

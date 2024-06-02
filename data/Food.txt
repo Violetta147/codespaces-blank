@@ -1,0 +1,21 @@
+  PIN		Name📛            		Price    		Status   		Unit	
+   15		Fish🐟            		23000    		  1      		  Dish	
+    1		Cake🍰            		12000    		  1      		  Dish	
+   21		Spaghetti🍝       		30000    		  1      		  Dish	
+   33		Ice cream🍦       		14000    		  1      		  Ice pop	
+   41		Dumpling🥟        		15000    		  1      		  100g	
+    6		Octopus🐙         		45000    		  1      		  300g	
+   18		Burger🍔          		36000    		  1      		  Burger	
+   95		Burito🌯          		28000    		  1      		  Burito	
+   50		Watermelon🍉      		10000    		  1      		  2 Slices	
+   38		Orange Juice🧃    		16000    		  1      		  Cup	
+    2		Lemonade🍋        		16000    		  1      		  Cup	
+   77		Spicy Noodle🍜    		40000    		  1      		  Bowl	
+   17		Pizza🍕           		17000    		  1      		  Slice	
+   11		Waffle🧇          		36000    		  1      		  Slice	
+   12		Pretzel🥨         		20000    		  1      		  Pretzel	
+   32		Curry Rice🍛      		32000    		  1      		  Dish	
+   23		Banh Mi Thit Cha🍗		15000    		  1      		  Loaf	
+   45		Apple🍎           		8000000  		  1      		  5kg	
+   10		Avocado🥑         		100000000		  0      		  5kg	
+   35		MilkTea💧         		20000    		  1      		  Cup	
