@@ -1,0 +1,17 @@
+State: Ended
+TS code: 20240606
+Bill ID: 120240606
+               PIN		           Food😋	              Price	          Quantity	           Unit	        Payment	
+                35		        MilkTea💧	              20000	              2	                Cup	          40000	
+                                                                                          Total:          100000
+                                                                                           Sale:           25000
+                                                                                        Payment:           75000
+                                                                                         Status:            Paid
+Bill ID: 220240606
+               PIN		           Food😋	              Price	          Quantity	           Unit	        Payment	
+                35		        MilkTea💧	              20000	              2	                Cup	          40000	
+                23		Banh Mi Thit Cha🍗	              15000	              3	               Loaf	          45000	
+                                                                                          Total:          125000
+                                                                                           Sale:           32000
+                                                                                        Payment:           93000
+                                                                                         Status:            Paid
