@@ -1,9 +1,0 @@
-State: Active
-TS code: 20240605
-Bill ID: 120240605
-               PIN		           Food😋	              Price	          Quantity	           Unit	        Payment	
-                35		        MilkTea💧	              20000	              3	                Cup	          60000	
-                                                                                          Total:           60000
-                                                                                           Sale:               0
-                                                                                        Payment:           60000
-                                                                                         Status:            Paid

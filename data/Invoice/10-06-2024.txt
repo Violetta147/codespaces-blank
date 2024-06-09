@@ -1,2 +1,0 @@
-State: Active
-TS code: 20240610

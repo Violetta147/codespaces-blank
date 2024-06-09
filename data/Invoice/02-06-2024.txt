@@ -1,0 +1,12 @@
+State: Active
+TS code: 20240602
+Bill ID: 120240602
+               FID		           Food😋	              Price	          Quantity	           Unit	        Payment	
+                 5		          Bento🍱	              20000	              1	                Box	          20000	
+                 4		       MilkyWay🌌	              15000	              1	                Cup	          15000	
+                 3		          Mixao🍝	              20000	              1	               Dish	          20000	
+                 6		        Octopus🐙	              45000	              1	               300g	          45000	
+                                                                                              Total:          100000
+                                                                                               Sale:           25000
+                                                                                            Payment:           75000
+                                                                                             Status:            Paid

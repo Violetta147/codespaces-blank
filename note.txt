@@ -1878,3 +1878,217 @@ void printMenuAdmin()
 //     }
 //     statistic(Date1, Date2);
 // }
+void delete_order_item(int ordi)
+{
+        int FID;
+        printf("Enter the FID of the item you want to delete: ");
+        while (scanf("%d", &FID) != 1)
+        {
+            clstd();
+            printf("Invalid FID, please reinput: ");
+        }
+        clstd();
+        int i;
+        for (i = 0; i < Invoice.order[ordi].total; i++)
+        {
+            if (Invoice.order[ordi].items[i].dish.FID == FID)
+            {
+                break;
+            }
+        }
+        if (i == Invoice.order[ordi].total)
+        {
+            printf("No item with FID %d found in the order!\n", FID);
+        }
+        else
+        {
+            for (int j = i; j < Invoice.order[ordi].total - 1; j++)
+            {
+                Invoice.order[ordi].items[j] = Invoice.order[ordi].items[j + 1];
+            }
+            Invoice.order[ordi].total--;
+            Invoice.order[ordi].sum = 0;
+            Invoice.order[ordi].sale = 0;
+            for (int i = 0; i < Invoice.order[ordi].total; i++)
+            {
+                Invoice.order[ordi].sum += Invoice.order[ordi].items[i].cash;
+            }
+            if (Invoice.order[ordi].sum >= 100000)
+            {
+                Invoice.order[ordi].sale = Invoice.order[ordi].sum * 25 / 100;
+                Invoice.order[ordi].sale = ceil(Invoice.order[ordi].sale / 1000) * 1000;
+            }
+            Invoice.order[ordi].pay = floor(Invoice.order[ordi].sum - Invoice.order[ordi].sale);
+        }
+}
+void change_order_item(int ordi)
+{
+    int FID;
+    printf("Enter the FID of the item you want to change quantity: ");
+    while (scanf("%d", &FID) != 1)
+    {
+        clstd();
+        printf("Invalid FID, please reinput: ");
+    }
+    clstd();
+    int i;
+    for (i = 0; i < Invoice.order[ordi].total; i++)
+    {
+        if (Invoice.order[ordi].items[i].dish.FID == FID)
+        {
+            break;
+        }
+    }
+    if (i == Invoice.order[ordi].total)
+    {
+        printf("No item with FID %d found in the order!\n", FID);
+    }
+    else
+    {
+        int quantity;
+        printf("Enter the new quantity: ");
+        while (scanf("%d", &quantity) != 1)
+        {
+            clstd();
+            printf("Invalid quantity, please reinput: ");
+        }
+        clstd();
+        Invoice.order[ordi].items[i].quantity = quantity;
+        Invoice.order[ordi].items[i].cash = (float) (Invoice.order[ordi].items[i].dish.Price * quantity);
+        //recalculate the total, sale, payment of the order
+        Invoice.order[ordi].sum = 0;
+        Invoice.order[ordi].sale = 0;
+        for (int i = 0; i < Invoice.order[ordi].total; i++)
+        {
+            Invoice.order[ordi].sum += Invoice.order[ordi].items[i].cash;
+        }
+        if (Invoice.order[ordi].sum >= 100000)
+        {
+            Invoice.order[ordi].sale = Invoice.order[ordi].sum * 25 / 100;
+            Invoice.order[ordi].sale = ceil(Invoice.order[ordi].sale / 1000) * 1000;
+        }
+        Invoice.order[ordi].pay = floor(Invoice.order[ordi].sum - Invoice.order[ordi].sale);
+    }
+}
+/ bool parseFloat(char* str, float* num) {
+
+//     if(str[0] == '\n')
+//     {
+//         return false;
+//     }
+//     int stringLength = strlen(str);
+//     //Remove leading whitespaces 
+//     int startSliceString = 0;
+//     for (int i = 0; i < stringLength; i++)
+//     {
+//         if (str[i] == ' ' || str[i] == '\t' || )
+//         {
+//             startSliceString = i;
+//             break;
+//         }
+//     }
+//     //Remove trailing whitespaces
+//     int endSliceString = stringLength;
+//     for (int i = stringLength - 1; i >= 0; i--)
+//     {
+//         if (str[i] == ' ' || str[i] == '\t' || str[i] == '\n')
+//         {
+//             endSliceString = i;
+//             break;
+//         }
+//     }
+//     char removeWhiteSpaceString[MAX_STRING_LENGTH];
+//     int removedWhiteSpaceStringLength = 0;
+//     for(int i = startSliceString; i <= endSliceString; i++)
+//     {
+//         removeWhiteSpaceString[removedWhiteSpaceStringLength] = str[i];
+//         removedWhiteSpaceStringLength++;
+//     }
+//     //Check if the string is a negative number
+//     bool isNegative = false;
+//     if(removeWhiteSpaceString[0] == '-')
+//     {
+//         isNegative = true;
+
+//         //remove the negative sign
+//         removedWhiteSpaceStringLength--;
+//         for(int i = 0; i < removedWhiteSpaceStringLength; i++)
+//         {
+//             removeWhiteSpaceString[i] = removeWhiteSpaceString[i + 1];
+//         }
+//     }
+//     //Check if the string is empty
+//     if(removedWhiteSpaceStringLength == 0)
+//     {
+//         return false;
+//     }
+//     //Check if the string contains only digits using ASCII code
+//     for (int i = 0; i < removedWhiteSpaceStringLength; i++)
+//     {
+//         if (removeWhiteSpaceString[i] < '0' || removeWhiteSpaceString[i] > '9')
+//         {
+//             if (removeWhiteSpaceString[i] != '.')
+//             {
+//                 return false;
+//             }
+//         }
+//     }
+//     //Check if the string contains only one dot
+//     int dotCount = 0;
+//     int indexDotPosition = 0;
+//     for (; indexDotPosition < removedWhiteSpaceStringLength; indexDotPosition++)
+//     {
+//         if (removeWhiteSpaceString[indexDotPosition] == '.')
+//         {
+//             dotCount++;
+//         }
+//     }
+//     if (dotCount > 1)
+//     {
+//         return false;
+//     }
+//     //cut the string into 2 parts : integer part and decimal part using indexDotPosition
+//     int integerPart = 0;
+//     int decimalPart = 0;
+//     //if dot is not found, the whole string is integer part
+//     if(dotCount == 0)
+//     {
+//         for (int i = 0; i < removedWhiteSpaceStringLength; i++)
+//         {
+//             integerPart = integerPart * 10 + (removeWhiteSpaceString[i] - '0');
+//         }
+//     }
+//     else
+//     {
+//         char integerPartString[MAX_STRING_LENGTH];
+//         char decimalPartString[MAX_STRING_LENGTH];
+//         strncpy(integerPartString, removeWhiteSpaceString, indexDotPosition);
+//         integerPartString[indexDotPosition] = '\0';
+//         for(int i = 0; i < indexDotPosition; i++)
+//         {
+//             integerPart = integerPart * 10 + (integerPartString[i] - '0');
+//             if(integerPart < 0)
+//             {
+//                 return false;
+//             }
+//         }
+//         int decimalPartStringLength = removedWhiteSpaceStringLength - indexDotPosition - 1;
+//         strncpy(decimalPartString, removeWhiteSpaceString + indexDotPosition + 1, decimalPartStringLength);
+//         decimalPartString[decimalPartStringLength] = '\0';
+//         for(int i = 0; i < decimalPartStringLength; i++)
+//         {
+//             decimalPart = decimalPart * 10 + (decimalPartString[i] - '0');
+//             if(decimalPart < 0)
+//             {
+//                 return false;
+//             }
+//         }
+//     }
+//     float result = integerPart + (float)decimalPart / pow(10, strlen(removeWhiteSpaceString) - indexDotPosition - 1); 
+//     if(isNegative)
+//     {
+//         result = -result;
+//     }
+//     *num = result;
+//     return true;
+// }
