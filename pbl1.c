@@ -1326,29 +1326,29 @@ void bill_calc(int ordi)
         modify_order(ordi);
     }
     bill_print_file(invoice, ordi);
-    if(Invoice.order[ordi].total != 0)
+    if (Invoice.order[ordi].total != 0)
     {
-    if (YN("Do you want to purchase your order now?") == false)
-    {
-        printf("Your order have been saved!\n");
-        strcpy(Invoice.order[ordi].status, "Unpaid");
-        fprintf(invoice, "%100s%16s\n", "Status:", Invoice.order[ordi].status);
-    }
-    else
-    {
-        purchase(ordi);
-        fprintf(invoice, "%100s%16s\n", "Status:", Invoice.order[ordi].status);
-        printf("Here is your Bills to confirm you paid it\n");
-        printf("___________________________________________________________________________________"
-               "____"
-               "_________________________________________________  \n");
-        bill_print(ordi);
-        printf("%112s%23s\n", "Status:", Invoice.order[ordi].status);
-        printf("___________________________________________________________________________________"
-               "____"
-               "_________________________________________________  \n");
-        printf("Thank you for using our service, wish you a nice meal\n");
-    }
+        if (YN("Do you want to purchase your order now?") == false)
+        {
+            printf("Your order have been saved!\n");
+            strcpy(Invoice.order[ordi].status, "Unpaid");
+            fprintf(invoice, "%100s%16s\n", "Status:", Invoice.order[ordi].status);
+        }
+        else
+        {
+            purchase(ordi);
+            fprintf(invoice, "%100s%16s\n", "Status:", Invoice.order[ordi].status);
+            printf("Here is your Bills to confirm you paid it\n");
+            printf("___________________________________________________________________________________"
+                   "____"
+                   "_________________________________________________  \n");
+            bill_print(ordi);
+            printf("%112s%23s\n", "Status:", Invoice.order[ordi].status);
+            printf("___________________________________________________________________________________"
+                   "____"
+                   "_________________________________________________  \n");
+            printf("Thank you for using our service, wish you a nice meal\n");
+        }
     }
     fclose(invoice);
     return;
@@ -1452,14 +1452,22 @@ void PayUnpaidBill()
     clstd();
     if (YN("Do you want to order more food before paying?") == true)
     {
-        printf("Here's the menu!\n");
-        printMenuCustomer();
-        printf("Here your current bill!\n");
-        bill_print(point[choose - 1]);
-        Invoice.order[point[choose - 1]].pay = 0;
-        Invoice.order[point[choose - 1]].sum = 0;
-        Invoice.order[point[choose - 1]].sale = 0;
-        order(point[choose - 1]);
+        if (Invoice.order[point[choose - 1]].total == MAX_ORDER_ITEMS)
+        {
+            printf("You have reached your order limits.\n");
+            bill_calc(point[choose - 1]);
+        }
+        else
+        {
+            printf("Here's the menu!\n");
+            printMenuCustomer();
+            printf("Here your current bill!\n");
+            bill_print(point[choose - 1]);
+            Invoice.order[point[choose - 1]].pay = 0;
+            Invoice.order[point[choose - 1]].sum = 0;
+            Invoice.order[point[choose - 1]].sale = 0;
+            order(point[choose - 1]);
+        }
     }
     else
     {
@@ -1542,7 +1550,6 @@ void Customer()
         sscanf(buffer, "State: %19s\n", Invoice.state);
         fgets(buffer, sizeof(buffer), invoice);
         sscanf(buffer, "TS code: %19s\n", Invoice.TsCode);
-        printf("%s\n", Invoice.TsCode);
         daily_bills(invoice);
         printf("%d\n", Invoice.count);
         fclose(invoice);
@@ -1942,6 +1949,7 @@ void Statistics()
     {
         dateInts[i] = dateToInt(listFiles[i]);
     }
+    start = end + 1;
     for (int i = 0; i < totalFileIndex; i++)
     {
         if (date1 < dateInts[i])
@@ -1981,7 +1989,7 @@ void Statistics()
             continue;
         }
         rewind(invoice);
-        char buffer[100];
+        char buffer[1000];
         if (fgets(buffer, sizeof(buffer), invoice) != NULL)
         {
             fgets(buffer, sizeof(buffer), invoice);
@@ -2184,7 +2192,7 @@ void modify_order(int ordi)
                     Invoice.order[ordi].items[j] = Invoice.order[ordi].items[j + 1];
                 }
                 Invoice.order[ordi].total--;
-                if(Invoice.order[ordi].total == 0)
+                if (Invoice.order[ordi].total == 0)
                 {
                     return;
                 }
@@ -2281,3 +2289,4 @@ void modify_order(int ordi)
         contFlag = YN("Do you want to continue?");
     }
 }
+    
