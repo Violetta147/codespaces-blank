@@ -13,7 +13,7 @@ int main() {
 
   // Switch to canonical mode, disable echo
   struct termios oldt, newt;
-  tcgetattr(STDIN_FILENO, &oldt);
+  tcgetattr(STDIN_FILENO, &oldt); 
   newt = oldt;
   newt.c_lflag &= ~(ICANON | ECHO);
   tcsetattr(STDIN_FILENO, TCSANOW, &newt);
@@ -24,7 +24,7 @@ int main() {
     // Render table
     printf("┌");
     for (int i = 0; i < COLS; i++)
-      printf("─");
+      printf("─"); 
     printf("┐\n");
 
     for (int j = 0; j < ROWS; j++) {
@@ -105,16 +105,16 @@ int main() {
         int ch = getchar();
         if (ch == 27 || ch == 'q') {
           quit = 1;
-        } else if (ch == 'h' && xdir != 1) {
+        } else if (ch == 'a' && xdir != 1) {
           xdir = -1;
           ydir = 0;
-        } else if (ch == 'l' && xdir != -1) {
+        } else if (ch == 'd' && xdir != -1) {
           xdir = 1;
           ydir = 0;
-        } else if (ch == 'j' && ydir != -1) {
+        } else if (ch == 's' && ydir != -1) {
           xdir = 0;
           ydir = 1;
-        } else if (ch == 'k' && ydir != 1) {
+        } else if (ch == 'w' && ydir != 1) {
           xdir = 0;
           ydir = -1;
         }

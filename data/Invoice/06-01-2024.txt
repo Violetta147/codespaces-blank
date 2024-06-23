@@ -1,0 +1,11 @@
+State: Ended
+TS code: 20240106
+Bill ID: 120240106
+               FID		           Food😋	              Price	          Quantity	           Unit	        Payment
+                66		     Strawberry🍓	              33333	              1	               500g	          33333
+                35		        MilkTea💧	              20000	              1	                Cup	          20000
+                23		Banh Mi Thit Cha🍗	              15000	              1	               Loaf	          15000
+                                                                                              Total:           68333
+                                                                                               Sale:               0
+                                                                                            Payment:           68333
+                                                                                             Status:            Paid

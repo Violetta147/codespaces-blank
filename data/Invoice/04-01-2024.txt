@@ -1,0 +1,10 @@
+State: Ended
+TS code: 20240104
+Bill ID: 120240104
+               FID		           Food😋	              Price	          Quantity	           Unit	        Payment
+                15		           Fish🐟	              20000	              1	               Dish	          20000
+                 2		       Lemonade🍋	              16000	             24	                Cup	         384000
+                                                                                              Total:          404000
+                                                                                               Sale:          101000
+                                                                                            Payment:          303000
+                                                                                             Status:            Paid

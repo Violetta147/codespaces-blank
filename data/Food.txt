@@ -22,3 +22,5 @@
     3		Mixao🍝           		20000		  1  		  Dish	
     4		MilkyWay🌌        		15000		  1  		  Cup	
     5		Bento🍱           		20000		  1  		  Box	
+    7		Jujutsu🦈         		35000		  0  		  kg	
+    8		ABC😋             		40000		  0  		  Letters	

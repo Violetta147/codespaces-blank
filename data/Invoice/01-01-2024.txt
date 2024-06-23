@@ -1,0 +1,20 @@
+State: Ended
+TS code: 20240101
+Bill ID: 120240101
+               FID		           Food😋	              Price	          Quantity	           Unit	        Payment
+                15		           Fish🐟	              20000	              1	               Dish	          20000
+                 1		           Cake🍰	              12000	              1	               Dish	          12000
+                21		      Spaghetti🍝	              30000	              1	               Dish	          30000
+                                                                                              Total:           62000
+                                                                                               Sale:               0
+                                                                                            Payment:           62000
+                                                                                             Status:            Paid
+Bill ID: 220240101
+               FID		           Food😋	              Price	          Quantity	           Unit	        Payment
+                41		       Dumpling🥟	              15000	              1	               100g	          15000
+                 6		        Octopus🐙	              45000	              1	               300g	          45000
+                38		   Orange Juice🧃	              16000	              1	                Cup	          16000
+                                                                                              Total:           76000
+                                                                                               Sale:               0
+                                                                                            Payment:           76000
+                                                                                             Status:            Paid

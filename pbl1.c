@@ -21,7 +21,7 @@
 #define FORMATTED_READ_BILLS "%18d\t\t%[^\t]\t%19f\t%15d\t%[^\t]\t%15f\n"
 
 char PASS[MAX] = "23TDT1";
-char yesyes[3] = "yes";
+char yesyes[4] = "yes";
 char x[1] = "X";
 
 char Date[11];
@@ -192,8 +192,13 @@ void delete_order_item(int ordi);
 
 void show_bill();
 
+void stat();
+void drawBar(int maxBarHeight, int barWidth, float payDays[], int start, int end, char listFiles[][MAX]);
+int countDigits(int n);
+
 int main(void)
 {
+    stat();
     while (true)
     {
         printf("Input X to exit the program\n");
@@ -222,10 +227,8 @@ int main(void)
                 if (toupper(move) == 'S')
                 {
                     Statistics();
-
                 }
-            }
-            while (true);
+            } while (true);
         }
         else if (toupper(mode) == 'C')
         {
@@ -403,18 +406,18 @@ void display()
             char hole[5];
             sprintf(hole, "%d", menu.dishes[i].FID);
             int q = ((11 - strlen(hole)) / 2) + strlen(hole) + (strlen(hole) + 1) % 2;
-            printf("%9c%*d", '|', q, menu.dishes[i].FID);
+            printf("%11s%*d", "│", q, menu.dishes[i].FID);
             int F = ((11 - strlen(hole)) / 2);
             for (; F > 0; F--)
                 printf(" ");
-            printf("|");
+            printf("│");
             q = ((24 - strlen(menu.dishes[i].Name)) / 2) + strlen(menu.dishes[i].Name) +
                 (strlen(menu.dishes[i].Name)) % 2;
             printf("%*s", q, menu.dishes[i].Name);
             F = ((24 - strlen(menu.dishes[i].Name)) / 2);
             for (; F > 0; F--)
                 printf(" ");
-            printf("|");
+            printf("│");
             char price[10];
             sprintf(price, "%.0f", menu.dishes[i].Price);
             q = ((14 - strlen(price)) / 2) + strlen(price) + (strlen(price) + 1) % 2;
@@ -422,14 +425,14 @@ void display()
             F = ((14 - strlen(price)) / 2);
             for (; F > 0; F--)
                 printf(" ");
-            printf("|");
+            printf("│");
             q = ((14 - strlen(menu.dishes[i].Unit)) / 2) + strlen(menu.dishes[i].Unit) +
                 (strlen(menu.dishes[i].Unit)) % 2;
             printf("%*s", q, menu.dishes[i].Unit);
             F = ((14 - strlen(menu.dishes[i].Unit)) / 2);
             for (; F > 0; F--)
                 printf(" ");
-            printf("|");
+            printf("│");
             printf("\n");
         }
         else if (toupper(mode) == 'A')
@@ -438,18 +441,18 @@ void display()
             char hole[5];
             sprintf(hole, "%d", menu.dishes[i].FID);
             int q = ((11 - strlen(hole)) / 2) + strlen(hole) + (strlen(hole) + 1) % 2;
-            printf("%9c%*d", '|', q, menu.dishes[i].FID);
+            printf("%11s%*d", "│", q, menu.dishes[i].FID);
             int F = ((11 - strlen(hole)) / 2);
             for (; F > 0; F--)
                 printf(" ");
-            printf("|");
+            printf("│");
             q = ((24 - strlen(menu.dishes[i].Name)) / 2) + strlen(menu.dishes[i].Name) +
                 (strlen(menu.dishes[i].Name)) % 2;
             printf("%*s", q, menu.dishes[i].Name);
             F = ((24 - strlen(menu.dishes[i].Name)) / 2);
             for (; F > 0; F--)
                 printf(" ");
-            printf("|");
+            printf("│");
             char price[10];
             sprintf(price, "%.0f", menu.dishes[i].Price);
             q = ((14 - strlen(price)) / 2) + strlen(price) + (strlen(price) + 1) % 2;
@@ -457,14 +460,14 @@ void display()
             F = ((14 - strlen(price)) / 2);
             for (; F > 0; F--)
                 printf(" ");
-            printf("|");
+            printf("│");
             q = ((14 - strlen(menu.dishes[i].Unit)) / 2) + strlen(menu.dishes[i].Unit) +
                 (strlen(menu.dishes[i].Unit)) % 2;
             printf("%*s", q, menu.dishes[i].Unit);
             F = ((14 - strlen(menu.dishes[i].Unit)) / 2);
             for (; F > 0; F--)
                 printf(" ");
-            printf("|");
+            printf("│");
             printf("\n");
             printf("\033[0m");
         }
@@ -485,72 +488,71 @@ void printMenuCustomer()
     printf("                                █░░║║║╠─║─║─║║║║║╠─░░█\n");
     printf("                                █░░╚╩╝╚╝╚╝╚╝╚╝╩─╩╚╝░░█\n");
     printf("                                █▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█\n");
-    printf("%9c", '+');
+    printf("%11s", "┌");
     for (int i = 0; i < 11; i++)
     {
-        printf("-");
+        printf("─");
     }
-    printf("+");
+    printf("┬");
     for (int i = 0; i < 22; i++)
     {
-        printf("-");
+        printf("─");
     }
-    printf("+");
+    printf("┬");
     for (int i = 0; i < 13; i++)
     {
-        printf("-");
+        printf("─");
     }
-    printf("+");
+    printf("┬");
     for (int i = 0; i < 14; i++)
     {
-        printf("-");
+        printf("─");
     }
-    printf("+");
-    printf("\n        |    FID📌  |        Dishes        |    Price    |     Unit     |\n");
-    printf("\t");
-    printf("|");
+    printf("┐");
+    printf("\n        │    FID📌  │        Dishes        │    Price    │     Unit     │\n");
+    printf("%11s", "├");
     for (int i = 0; i < 11; i++)
     {
-        printf("-");
+        printf("─");
     }
-    printf("|");
+    printf("┼");
     for (int i = 0; i < 22; i++)
     {
-        printf("-");
+        printf("─");
     }
-    printf("|");
+    printf("┼");
     for (int i = 0; i < 13; i++)
     {
-        printf("-");
+        printf("─");
     }
-    printf("|");
+    printf("┼");
     for (int i = 0; i < 14; i++)
     {
-        printf("-");
+        printf("─");
     }
-    printf("|\n");
+    printf("┤\n");
     display();
-    printf("%9c", '+');
+    printf("%11s", "└");
     for (int i = 0; i < 11; i++)
     {
-        printf("-");
+        printf("─");
     }
-    printf("+");
+    printf("┴");
     for (int i = 0; i < 22; i++)
     {
-        printf("-");
+        printf("─");
     }
-    printf("+");
+    printf("┴");
     for (int i = 0; i < 13; i++)
     {
-        printf("-");
+        printf("─");
     }
-    printf("+");
+    printf("┴");
     for (int i = 0; i < 14; i++)
     {
-        printf("-");
+        printf("─");
     }
-    printf("+\n");
+    printf("┘\n");
 }
 
 void arg()
@@ -560,8 +562,7 @@ void arg()
         printf("Are you sure to save change?(Y/N) : ");
         scanf("%c", &ans);
         clstd();
-    }
-    while (toupper(ans) != 'N' && toupper(ans) != 'Y' && toupper(ans) != 'X');
+    } while (toupper(ans) != 'N' && toupper(ans) != 'Y' && toupper(ans) != 'X');
     return;
 }
 
@@ -845,60 +846,60 @@ void Customize(int FID)
         clstd();
         switch (choice)
         {
-            case 1:
-                while (input("Give food new name", array.Name) == false || iseq(array.Name) == true)
-                {
-                    if (iseq(array.Name) == true)
-                        printf("This name is already used, please try another one!\n");
-                    else
-                    {
-                        printf("Invalid food name!\n");
-                        clstd();
-                    }
-                }
-                if (strcmp(array.Name, "0") == 0)
-                {
-                    strcpy(array.Name, menu.dishes[Pivot].Name);
-                }
-                break;
-            case 2:
-                printf("Food new price: ");
-                while (scanf("%f", &array.Price) != 1 || array.Price < 0)
-                {
-                    clstd();
-                    printf("Invalid price!\n");
-                    printf("Food new price: ");
-                }
-                if (array.Price == 0)
-                {
-                    array.Price = menu.dishes[Pivot].Price;
-                }
-                clstd();
-                break;
-            case 3:
-                Yn = YN("Do you want to switch status?");
-                if (Yn)
-                {
-                    array.Status = (array.Status + 1) % 2;
-                }
+        case 1:
+            while (input("Give food new name", array.Name) == false || iseq(array.Name) == true)
+            {
+                if (iseq(array.Name) == true)
+                    printf("This name is already used, please try another one!\n");
                 else
                 {
-                    // array.Status = menu.dishes[Pivot].Status;
-                    break;
+                    printf("Invalid food name!\n");
+                    clstd();
                 }
+            }
+            if (strcmp(array.Name, "0") == 0)
+            {
+                strcpy(array.Name, menu.dishes[Pivot].Name);
+            }
+            break;
+        case 2:
+            printf("Food new price: ");
+            while (scanf("%f", &array.Price) != 1 || array.Price < 0)
+            {
+                clstd();
+                printf("Invalid price!\n");
+                printf("Food new price: ");
+            }
+            if (array.Price == 0)
+            {
+                array.Price = menu.dishes[Pivot].Price;
+            }
+            clstd();
+            break;
+        case 3:
+            Yn = YN("Do you want to switch status?");
+            if (Yn)
+            {
+                array.Status = (array.Status + 1) % 2;
+            }
+            else
+            {
+                // array.Status = menu.dishes[Pivot].Status;
                 break;
-            case 4:
-                while (input("Food new unit", array.Unit) == false)
-                {
-                    printf("Invalid food unit!\n");
-                }
-                if (strcmp(array.Unit, "0") == 0)
-                {
-                    strcpy(array.Unit, menu.dishes[Pivot].Unit);
-                }
-                break;
-            default:
-                break; // not necessary
+            }
+            break;
+        case 4:
+            while (input("Food new unit", array.Unit) == false)
+            {
+                printf("Invalid food unit!\n");
+            }
+            if (strcmp(array.Unit, "0") == 0)
+            {
+                strcpy(array.Unit, menu.dishes[Pivot].Unit);
+            }
+            break;
+        default:
+            break; // not necessary
         }
         Yn = YN("Do you want to change another field?");
     }
@@ -931,8 +932,7 @@ void date()
         printf("Working Date(dd-mm-yyyy): ");
         scanf("%s", Date);
         clstd();
-    }
-    while (isvalid(Date) == false);
+    } while (isvalid(Date) == false);
 }
 
 bool isvalid(char *date)
@@ -1111,8 +1111,7 @@ void daily_bills(FILE *file)
                 &Invoice.order[Invoice.count].items[Invoice.order[Invoice.count].total].cash);
             if (k == 6)
                 Invoice.order[Invoice.count].total++;
-        }
-        while (k == 6);
+        } while (k == 6);
         fgets(buffer, sizeof(buffer), file);
         sscanf(buffer, "%*100s%16f", &Invoice.order[Invoice.count].sum);
         fgets(buffer, sizeof(buffer), file);
@@ -1173,17 +1172,14 @@ bool choose_date(char *Date1, char *Date2)
         printf("Starting Date(dd-mm-yyyy): ");
         scanf("%s", Date1);
         clstd();
-    }
-    while (isvalid(Date1) == false);
+    } while (isvalid(Date1) == false);
     sscanf(Date1, "%d-%d-%d", &day1, &month1, &year1);
-    char *end;
     do
     {
         printf("Ending Date(dd-mm-yyyy): ");
         scanf("%s", Date2);
         clstd();
-    }
-    while (isvalid(Date2) == false);
+    } while (isvalid(Date2) == false);
     sscanf(Date2, "%d-%d-%d", &day2, &month2, &year2);
     if (year2 > year1)
         return true;
@@ -1212,70 +1208,70 @@ bool order(int ordi)
     int i;
     int flag = 0;
     int quantity;
-    while(Invoice.order[ordi].total < MAX_ORDERS)
+    while (Invoice.order[ordi].total < MAX_ORDERS)
     {
         do
         {
-        printf("Type in the FID of the food you want to order: ");
-        while (scanf("%d", &FPIN) != 1)
-        {
-            clstd();
-            printf("Invalid FID, please reinput: ");
-        }
-        clstd();
-        if (FPIN == 0)
-        {
-            printf("You have just cancelling ordering!\n");
-            if (Invoice.order[ordi].total != 0)
-            {
-                printf("Calculating your order...!\n");
-                bill_calc(ordi);
-                return true;
-            }
-            else if (Invoice.order[ordi].total == 0)
-            {
-                printf("You have not order anything!\n");
-                return false;
-            }
-        }
-        if (isrep(FPIN) == true)
-        {
-            for (i = 0; i < Invoice.order[ordi].total; i++)
-            {
-                if (Invoice.order[ordi].items[i].dish.FID == FPIN)
-                {
-                    flag = 1;
-                    break;
-                }
-            }
-            printf("How many of this food do you want? ");
-            while (scanf("%d", &quantity) != 1 || quantity > 9999 || quantity < 1)
+            printf("Type in the FID of the food you want to order: ");
+            while (scanf("%d", &FPIN) != 1)
             {
                 clstd();
-                printf("Invalid quantity, please rechoose: ");
+                printf("Invalid FID, please reinput: ");
             }
             clstd();
-            if (flag == 0)
+            if (FPIN == 0)
             {
-                Invoice.order[ordi].items[Invoice.order[ordi].total].dish = menu.dishes[slot];
-                Invoice.order[ordi].items[Invoice.order[ordi].total].quantity = quantity;
-                Invoice.order[ordi].items[Invoice.order[ordi].total].cash =
-                    (float) (Invoice.order[ordi].items[Invoice.order[ordi].total].dish.Price *
-                             quantity);
-                Invoice.order[ordi].total++;
+                printf("You have just cancelling ordering!\n");
+                if (Invoice.order[ordi].total != 0)
+                {
+                    printf("Calculating your order...!\n");
+                    bill_calc(ordi);
+                    return true;
+                }
+                else if (Invoice.order[ordi].total == 0)
+                {
+                    printf("You have not order anything!\n");
+                    return false;
+                }
+            }
+            if (isrep(FPIN) == true)
+            {
+                for (i = 0; i < Invoice.order[ordi].total; i++)
+                {
+                    if (Invoice.order[ordi].items[i].dish.FID == FPIN)
+                    {
+                        flag = 1;
+                        break;
+                    }
+                }
+                printf("How many of this food do you want? ");
+                while (scanf("%d", &quantity) != 1 || quantity > 9999 || quantity < 1)
+                {
+                    clstd();
+                    printf("Invalid quantity, please rechoose: ");
+                }
+                clstd();
+                if (flag == 0)
+                {
+                    Invoice.order[ordi].items[Invoice.order[ordi].total].dish = menu.dishes[slot];
+                    Invoice.order[ordi].items[Invoice.order[ordi].total].quantity = quantity;
+                    Invoice.order[ordi].items[Invoice.order[ordi].total].cash =
+                        (float)(Invoice.order[ordi].items[Invoice.order[ordi].total].dish.Price *
+                                quantity);
+                    Invoice.order[ordi].total++;
+                }
+                else
+                {
+                    Invoice.order[ordi].items[i].quantity += quantity;
+                    Invoice.order[ordi].items[i].cash +=
+                        (float)(Invoice.order[ordi].items[i].dish.Price * quantity);
+                    flag = 0;
+                }
+                printf("You have just ordered %s with a quantity of %d\n", Invoice.order[ordi].items[i].dish.Name, quantity);
             }
             else
-            {
-                Invoice.order[ordi].items[i].quantity += quantity;
-                Invoice.order[ordi].items[i].cash +=
-                    (float) (Invoice.order[ordi].items[i].dish.Price * quantity);
-                flag = 0;
-            }
-            printf("You have just ordered %s with a quantity of %d\n", Invoice.order[ordi].items[i].dish.Name, quantity);
-        }
-        else
-            printf("No food match this FID!\n");
-        }while (isrep(FPIN) == false);
+                printf("No food match this FID!\n");
+        } while (isrep(FPIN) == false);
     }
     if (Invoice.order[ordi].total == MAX_ORDERS)
     {
@@ -1316,12 +1312,12 @@ void bill_calc(int ordi)
     else
         Invoice.order[ordi].sale = 0;
     Invoice.order[ordi].pay = floor(Invoice.order[ordi].sum - Invoice.order[ordi].sale);
-    printf("_______________________________________________________________________________________"
-           "_________________________________________________  \n");
+    printf("────────────────────────────────────────────────────────────────────────────────────────────────"
+           "───────────────────────────────────────\n");
     bill_print(ordi);
     bill_print_file(invoice, ordi);
-    printf("_______________________________________________________________________________________"
-           "_________________________________________________  \n");
+    printf("────────────────────────────────────────────────────────────────────────────────────────────────"
+           "───────────────────────────────────────\n");
     if (YN("Do you want to purchase your order now?") == false)
     {
         printf("Your order have been saved!\n");
@@ -1333,14 +1329,12 @@ void bill_calc(int ordi)
         purchase(ordi);
         fprintf(invoice, "%100s%16s\n", "Status:", Invoice.order[ordi].status);
         printf("Here is your Bills to confirm you paid it\n");
-        printf("___________________________________________________________________________________"
-               "____"
-               "_________________________________________________  \n");
+        printf("────────────────────────────────────────────────────────────────────────────────────────────────"
+               "───────────────────────────────────────\n");
         bill_print(ordi);
         printf("%112s%23s\n", "Status:", Invoice.order[ordi].status);
-        printf("___________________________________________________________________________________"
-               "____"
-               "_________________________________________________  \n");
+        printf("────────────────────────────────────────────────────────────────────────────────────────────────"
+               "───────────────────────────────────────\n");
         printf("Thank you for using our service, wish you a nice meal\n");
     }
     fclose(invoice);
@@ -1360,8 +1354,7 @@ void purchase(int ordi)
         if (k != 1 || pay <= 0)
             printf("Please give a valid amount of cash!\n");
         clstd();
-    }
-    while (k != 1 || pay <= 0);
+    } while (k != 1 || pay <= 0);
     if (pay >= Invoice.order[ordi].pay)
     {
         printf("We have receive %.0fvnd from you, your order have been purchase and you will "
@@ -1385,11 +1378,9 @@ void purchase(int ordi)
                 if (k != 1 || pay <= 0)
                     printf("Please give a valid amount of cash!\n");
                 clstd();
-            }
-            while (k != 1 || pay <= 0);
+            } while (k != 1 || pay <= 0);
             capital_sum += pay;
-        }
-        while (capital_sum < Invoice.order[ordi].pay);
+        } while (capital_sum < Invoice.order[ordi].pay);
         printf("We have receive %.0fvnd from you, your order have been purchase and you will "
                "receive %.0fvnd in charge\n",
                capital_sum, capital_sum - Invoice.order[ordi].pay);
@@ -1461,14 +1452,12 @@ void PayUnpaidBill()
     {
         purchase(point[choose - 1]);
         printf("Here is your Bills to confirm you paid it\n");
-        printf("___________________________________________________________________________________"
-               "____"
-               "_________________________________________________  \n");
+        printf("────────────────────────────────────────────────────────────────────────────────────────────────"
+               "───────────────────────────────────────\n");
         bill_print(point[choose - 1]);
         printf("%112s%23s\n", "Status:", Invoice.order[point[choose - 1]].status);
-        printf("___________________________________________________________________________________"
-               "____"
-               "_________________________________________________  \n");
+        printf("────────────────────────────────────────────────────────────────────────────────────────────────"
+               "───────────────────────────────────────\n");
         printf("Thank you for using our service, wish you a nice meal!\n");
     }
     rewriteorder();
@@ -1500,7 +1489,7 @@ void rewriteorder()
 void Customer()
 {
     yawm();
-    char *filename = (char *) (malloc(20 * sizeof(char)));
+    char *filename = (char *)(malloc(20 * sizeof(char)));
     char filePath[MAX_PATH_LENGTH];
     strcpy(filePath, BASE_DATA_PATH);
     strcat(filePath, INVOICES_PATH);
@@ -1546,7 +1535,7 @@ void Customer()
     else
     {
         Invoice.TsCode[0] = '\0';
-        char *k = hash(Date);
+        hash(Date);
         fprintf(invoice, "State: %s\n", "Active");
         strcpy(Invoice.state, "Active");
         fprintf(invoice, "TS code: %s\n", Invoice.TsCode);
@@ -1756,9 +1745,9 @@ void print_stat(Stat Stats[], int count)
 {
     int sign = 0;
     int i = 0;
-    printf("+-----------------------------------------------------------+\n");
-    printf("| Rank |        Name        |    Quantity    |    Total     |\n");
-    printf("+-----------------------------------------------------------+\n");
+    printf("┌──────┬────────────────────┬────────────────┬──────────────┐\n");
+    printf("│ Rank │        Name        │    Quantity    │    Total     │\n");
+    printf("├──────┼────────────────────┼────────────────┼──────────────┤\n");
     for (; i < count;)
     {
         for (int j = i + 1; j < count; j++)
@@ -1772,7 +1761,7 @@ void print_stat(Stat Stats[], int count)
         }
         for (int k = 0; k < sign - i; k++)
         {
-            printf("| %-4d | %-20s | %14d | %13.0f|\n", i + 1, Stats[k + i].Name,
+            printf("│ %-4d │ %-20s │ %14d │ %13.0f│\n", i + 1, Stats[k + i].Name,
                    Stats[k + i].quantity, Stats[k + i].profit);
         }
         if (sign == count - 1)
@@ -1782,10 +1771,10 @@ void print_stat(Stat Stats[], int count)
     }
     if (sign == count - 1)
     {
-        printf("| %-4d | %-20s | %14d | %13.0f|\n", count, Stats[count - 1].Name,
+        printf("│ %-4d │ %-20s │ %14d │ %13.0f│\n", count, Stats[count - 1].Name,
                Stats[count - 1].quantity, Stats[count - 1].profit);
     }
-    printf("+-----------------------------------------------------------+\n");
+    printf("└──────┴────────────────────┴────────────────┴──────────────┘\n");
 }
 
 void fprint_stat(Stat Stats[], int count, FILE *file)
@@ -1827,6 +1816,7 @@ void fprint_stat(Stat Stats[], int count, FILE *file)
 
 void printMenuAdmin()
 {
+
     printf("\nWelcome to Teddy Restaurant!\n");
     printf("                                ───▄▀▀▀▄▄▄▄▄▄▄▀▀▀▄───\n");
     printf("                                ───█▒▒░░░░░░░░░▒▒█───\n");
@@ -1838,86 +1828,79 @@ void printMenuAdmin()
     printf("                                █░░║║║╠─║─║─║║║║║╠─░░█\n");
     printf("                                █░░╚╩╝╚╝╚╝╚╝╚╝╩─╩╚╝░░█\n");
     printf("                                █▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█\n");
-    printf("%9c", '+');
+    printf("%11s", "┌");
     for (int i = 0; i < 11; i++)
     {
-        printf("-");
+        printf("─");
     }
-    printf("+");
+    printf("┬");
     for (int i = 0; i < 22; i++)
     {
-        printf("-");
+        printf("─");
     }
-    printf("+");
+    printf("┬");
     for (int i = 0; i < 13; i++)
     {
-        printf("-");
+        printf("─");
     }
-    printf("+");
+    printf("┬");
     for (int i = 0; i < 14; i++)
     {
-        printf("-");
+        printf("─");
     }
-    printf("+");
-    printf("\n        |    FID📌  |        Dishes        |    Price    |     Unit     |\n");
-    printf("\t");
-    printf("|");
+    printf("┐");
+    printf("\n        │    FID📌  │        Dishes        │    Price    │     Unit     │\n");
+    printf("%11s", "├");
     for (int i = 0; i < 11; i++)
     {
-        printf("-");
+        printf("─");
     }
-    printf("|");
+    printf("┼");
     for (int i = 0; i < 22; i++)
     {
-        printf("-");
+        printf("─");
     }
-    printf("|");
+    printf("┼");
     for (int i = 0; i < 13; i++)
     {
-        printf("-");
+        printf("─");
     }
-    printf("|");
+    printf("┼");
     for (int i = 0; i < 14; i++)
     {
-        printf("-");
+        printf("─");
     }
-    printf("|\n");
+    printf("┤\n");
     display();
-    printf("%9c", '+');
+    printf("%11s", "└");
     for (int i = 0; i < 11; i++)
     {
-        printf("-");
+        printf("─");
     }
-    printf("+");
+    printf("┴");
     for (int i = 0; i < 22; i++)
     {
-        printf("-");
+        printf("─");
     }
-    printf("+");
+    printf("┴");
     for (int i = 0; i < 13; i++)
     {
-        printf("-");
+        printf("─");
     }
-    printf("+");
+    printf("┴");
     for (int i = 0; i < 14; i++)
     {
-        printf("-");
+        printf("─");
     }
-    printf("+\n");
-    printf("%8s", "");
-    printf("+-----------------------------------------+\n");
-    printf("%8s|1. ADD NEW FOOD(A)                       |\n", "");
-    printf("%8s|2. CUSTOMIZE FOOD'S INFORMATION(C)       |\n", "");
-    printf("%8s|3. DELETE FOOD(D)                        |\n", "");
-    printf("%8s|4. STATISTIC(S)                          |\n", "");
-    printf("%8s|5. EXIT(X)                               |\n", "");
-    printf("%8s", "");
-    printf("+");
-    for (int i = 0; i < 41; i++)
-    {
-        printf("-");
-    }
-    printf("+");
+    printf("┘\n");
+
+    printf("%8s┌─────────────────────────────────────────┐\n", "");
+    printf("%8s│1. ADD NEW FOOD(A)                       │\n", "");
+    printf("%8s│2. CUSTOMIZE FOOD'S INFORMATION(C)       │\n", "");
+    printf("%8s│3. DELETE FOOD(D)                        │\n", "");
+    printf("%8s│4. STATISTIC(S)                          │\n", "");
+    printf("%8s│5. EXIT(X)                               │\n", "");
+    printf("%8s└─────────────────────────────────────────┘\n", "");
     printf("\n");
 }
 
@@ -2003,7 +1986,7 @@ void Statistics()
         printf("No order to statistics\n");
     }
     bool Yn = YN("Do you want to go back to ADMIN PANEL?");
-    if(Yn == true)
+    if (Yn == true)
     {
         printf("\033[0m");
     }
@@ -2016,45 +1999,45 @@ void Statistics()
 
 void delete_order_item(int ordi)
 {
-        int FID;
-        printf("Enter the FID of the item you want to delete: ");
-        while (scanf("%d", &FID) != 1)
-        {
-            clstd();
-            printf("Invalid FID, please reinput: ");
-        }
+    int FID;
+    printf("Enter the FID of the item you want to delete: ");
+    while (scanf("%d", &FID) != 1)
+    {
         clstd();
-        int i;
+        printf("Invalid FID, please reinput: ");
+    }
+    clstd();
+    int i;
+    for (i = 0; i < Invoice.order[ordi].total; i++)
+    {
+        if (Invoice.order[ordi].items[i].dish.FID == FID)
+        {
+            break;
+        }
+    }
+    if (i == Invoice.order[ordi].total)
+    {
+        printf("No item with FID %d found in the order!\n", FID);
+    }
+    else
+    {
+        for (int j = i; j < Invoice.order[ordi].total - 1; j++)
+        {
+            Invoice.order[ordi].items[j] = Invoice.order[ordi].items[j + 1];
+        }
+        Invoice.order[ordi].total--;
+        Invoice.order[ordi].sum = 0;
         for (i = 0; i < Invoice.order[ordi].total; i++)
         {
-            if (Invoice.order[ordi].items[i].dish.FID == FID)
-            {
-                break;
-            }
+            Invoice.order[ordi].sum += Invoice.order[ordi].items[i].cash;
         }
-        if (i == Invoice.order[ordi].total)
+        if (Invoice.order[ordi].sum >= 100000)
         {
-            printf("No item with FID %d found in the order!\n", FID);
+            Invoice.order[ordi].sale = Invoice.order[ordi].sum * 25 / 100;
+            Invoice.order[ordi].sale = ceil(Invoice.order[ordi].sale / 1000) * 1000;
         }
-        else
-        {
-            for (int j = i; j < Invoice.order[ordi].total - 1; j++)
-            {
-                Invoice.order[ordi].items[j] = Invoice.order[ordi].items[j + 1];
-            }
-            Invoice.order[ordi].total--;
-            Invoice.order[ordi].sum = 0;
-            for (i = 0; i < Invoice.order[ordi].total; i++)
-            {
-                Invoice.order[ordi].sum += Invoice.order[ordi].items[i].cash;
-            }
-            if (Invoice.order[ordi].sum >= 100000)
-            {
-                Invoice.order[ordi].sale = Invoice.order[ordi].sum * 25 / 100;
-                Invoice.order[ordi].sale = ceil(Invoice.order[ordi].sale / 1000) * 1000;
-            }
-            Invoice.order[ordi].pay = floor(Invoice.order[ordi].sum - Invoice.order[ordi].sale);
-        }
+        Invoice.order[ordi].pay = floor(Invoice.order[ordi].sum - Invoice.order[ordi].sale);
+    }
 }
 
 void change_order_item(int ordi)
@@ -2090,8 +2073,8 @@ void change_order_item(int ordi)
         }
         clstd();
         Invoice.order[ordi].items[i].quantity = quantity;
-        Invoice.order[ordi].items[i].cash = (float) (Invoice.order[ordi].items[i].dish.Price * quantity);
-        //recalculate the total, sale, payment of the order
+        Invoice.order[ordi].items[i].cash = (float)(Invoice.order[ordi].items[i].dish.Price * quantity);
+        // recalculate the total, sale, payment of the order
         Invoice.order[ordi].sum = 0;
         Invoice.order[ordi].sale = 0;
         for (i = 0; i < Invoice.order[ordi].total; i++)
@@ -2115,7 +2098,7 @@ bool delete_change_order(int ordi)
         printf("If you want to delete any dish(D) or change any dish quantity(Q) or confirm your order(C)?(D/Q/C): ");
         scanf("%c", &c);
         clstd();
-    }while(toupper(c) != 'D' && toupper(c) != 'Q' && toupper(c) != 'C');
+    } while (toupper(c) != 'D' && toupper(c) != 'Q' && toupper(c) != 'C');
     if (toupper(c) == 'D')
     {
         delete_order_item(ordi);
@@ -2135,7 +2118,7 @@ void show_bill()
     printf("You have receive a total of %d order today!\n", Invoice.count);
     printf("Type in the ordi number of your number(from 1 to %d): ", Invoice.count);
     scanf("%d", &ordi);
-    while(ordi <= 0 || ordi > Invoice.count)
+    while (ordi <= 0 || ordi > Invoice.count)
     {
         printf("Invalid bill ordi number\n");
         clstd();
@@ -2143,4 +2126,206 @@ void show_bill()
     clstd();
     printf("Here is the Bill you want to see:\n");
     bill_print(ordi - 1);
+}
+void stat()
+{
+    char Date1[11], Date2[11];
+    while (choose_date(Date1, Date2) == false)
+    {
+        printf("Invalid range cannot statistic please choose again!\n");
+    }
+    int date1 = dateToInt(Date1);
+    int date2 = dateToInt(Date2);
+    char filePath[MAX_PATH_LENGTH];
+    strcpy(filePath, BASE_DATA_PATH);
+    strcat(filePath, INVOICES_PATH);
+    char listFiles[MAX][MAX];
+    int totalFileIndex = 0;
+    getListOrders(listFiles, &totalFileIndex);
+    int end = totalFileIndex;
+    int start = end + 1;
+    int dateInts[MAX];
+    for (int i = 0; i < totalFileIndex; i++)
+    {
+        dateInts[i] = dateToInt(listFiles[i]);
+    }
+    for (int i = 0; i < totalFileIndex; i++)
+    {
+        if (date1 < dateInts[i])
+        {
+            start = i - 1;
+            break;
+        }
+        else if (date1 == dateInts[i])
+        {
+            start = i;
+            break;
+        }
+    }
+    for (int i = start + 1; i < totalFileIndex; i++)
+    {
+        if (date2 < dateInts[i])
+        {
+            end = i - 1;
+            break;
+        }
+        else if (date2 == dateInts[i])
+        {
+            end = i;
+            break;
+        }
+    }
+    // if day range is wrong
+    if (start == end + 1)
+    {
+        return;
+    }
+    else if (start == end & start == - 1 & end == -1)
+    {
+        return;
+    }
+    float payDays[MAX] = {0};
+    // Bills* invoiceBarChart;
+    for (int i = start; i < end; i++)
+    {
+        char filename[MAX_PATH_LENGTH];
+        strcpy(filename, filePath);
+        strcat(filename, listFiles[i]);
+        FILE *invoice = fopen(filename, "r");
+        if (invoice == NULL)
+        {
+            continue;
+        }
+        char buffer[1000];
+        Invoice.count = 0;
+        Invoice.gain = 0;
+        fscanf(invoice, "State: %s\n", Invoice.state);
+        fscanf(invoice, "TS code: %s\n", Invoice.TsCode);
+
+        while (fscanf(invoice, "Bill ID: %s\n", Invoice.order[Invoice.count].BID) == 1)
+        {
+            fgets(buffer, sizeof(buffer), invoice);
+            while (fscanf(invoice, FORMATTED_READ_BILLS,
+                          &Invoice.order[Invoice.count].items[Invoice.order[Invoice.count].total].dish.FID,
+                          Invoice.order[Invoice.count].items[Invoice.order[Invoice.count].total].dish.Name,
+                          &Invoice.order[Invoice.count].items[Invoice.order[Invoice.count].total].dish.Price,
+                          &Invoice.order[Invoice.count].items[Invoice.order[Invoice.count].total].quantity,
+                          Invoice.order[Invoice.count].items[Invoice.order[Invoice.count].total].dish.Unit,
+                          &Invoice.order[Invoice.count].items[Invoice.order[Invoice.count].total].cash) == 6)
+            {
+                Invoice.order[Invoice.count].total++;
+            }
+            fgets(buffer, sizeof(buffer), invoice);
+            sscanf(buffer, "%*100s%16f", &Invoice.order[Invoice.count].sum);
+            fgets(buffer, sizeof(buffer), invoice);
+            sscanf(buffer, "%*100s%16f", &Invoice.order[Invoice.count].sale);
+            fgets(buffer, sizeof(buffer), invoice);
+            sscanf(buffer, "%*100s%16f", &Invoice.order[Invoice.count].pay);
+            fgets(buffer, sizeof(buffer), invoice);
+            sscanf(buffer, "%*100s%16s", Invoice.order[Invoice.count].status);
+            Invoice.gain += Invoice.order[Invoice.count].pay;
+            Invoice.count++;
+        }
+        fclose(invoice);
+        payDays[i] = Invoice.gain;
+        // invoiceBarChart = (Bills*)malloc(sizeof(Bills) * (end - start));
+        // invoiceBarChart[i] = Invoice;
+        memset(&Invoice, 0, sizeof(Invoice));
+    }
+    // print the statistic
+    printf("\033[2J\033[H");
+    printf("                                                          ┌────────────────────────────────────────────────────────────┐\n");
+
+    printf("%*s%*s%s%s%s%s%*s\n", 61, "│", 10, "", "STATISTIC FROM ", Date1, " TO ", Date2, 14, "│");
+    printf("                                                          └────────────────────────────────────────────────────────────┘\n");
+    for (int i = 0; i < totalFileIndex; i++)
+    {
+        listFiles[i][strlen(listFiles[i]) - 4] = '\0';
+    }
+    for (int i = start; i < end; i++)
+    {
+        printf("The total gain of day %s is %20.0f VND\n", listFiles[i], payDays[i]);
+    }
+    printf("\n");
+    printf("──────────────────────────────────────────────────────────────────────────────────────────");
+    float total = 0;
+    for (int i = start; i < end; i++)
+    {
+        total += payDays[i];
+    }
+    printf("\n\t\t\t\t\t\t\t\t\t  TOTAL GAIN  \n%80.0f VND\n", total);
+
+    bool yN = YN("Do you want to see the statistic in form of bar chart?");
+    if (yN == true)
+    {
+        printf("\033[2J\033[H");
+        int maxBarHeight = 15;
+        int barWidth = 5;
+        printf("\n\n\n");
+        drawBar(maxBarHeight, barWidth, payDays, start, end, listFiles);
+        getchar();
+    }
+}
+void drawBar(int maxBarHeight, int barWidth, float payDays[], int start, int end, char listFiles[][MAX])
+{
+    for (int i = 0; i < maxBarHeight; i++)
+    {
+        for (int j = start; j < end; j++)
+        {
+            if (payDays[j] / 120000 * maxBarHeight >= maxBarHeight - i)
+            {
+                printf("\t");
+                for (int w = 0; w < barWidth; w++)
+                {
+                    printf("█");
+                }
+            }
+            else
+            {
+                for (int w = 0; w < barWidth; w++)
+                {
+                    printf(" ");
+                }
+            }
+            printf("         "); // Space between bars
+        }
+        printf("\n");
+    }
+    for (int i = start; i < end; i++)
+    {
+        printf("      %s", listFiles[i]);
+    }
+    printf("\n");
+    for (int i = 0; i < maxBarHeight + 2; i++)
+    {
+        printf("│");
+        printf("\033[4D");
+        printf("\033[1A");
+    }
+    printf("\t");
+    for (int j = start; j < end; j++)
+    {
+        float currentBarHeight = payDays[j] / 120000 * maxBarHeight;
+        if((int)currentBarHeight - maxBarHeight == 0)
+        {
+            printf("%.0f", payDays[j]);
+            printf("\033[%dD", countDigits((int)payDays[j]));
+            printf("      ");
+            continue;
+        }
+        printf("\033[%dB%.0f",maxBarHeight - (int)currentBarHeight, payDays[j]);
+        printf("\033[%dD", countDigits((int)payDays[j]));
+        printf("\033[%dA", maxBarHeight - (int)currentBarHeight);
+        printf("      ");
+    }
+}
+int countDigits(int n)
+{
+    int count = 0;
+    while (n != 0)
+    {
+        n /= 10;
+        count++;
+    }
+    return count;
 }

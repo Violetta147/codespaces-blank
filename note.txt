@@ -2092,3 +2092,301 @@ void change_order_item(int ordi)
 //     *num = result;
 //     return true;
 // }
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ncurses.h>
+#define ENTER 13
+#define TAB 9
+#define BCKSPC 127 // ASCII value for backspace is 127
+
+struct user{
+    char fullName[50];
+    char email[50];
+    char username[50];
+    char password[50];
+    char phone[50];
+};
+
+void takeinput(char ch[50])
+{
+    fgets(ch, 50, stdin);
+    ch[strlen(ch)-1] = '\0'; // Correctly remove newline character
+}
+
+void generateUsername(char email[50], char username[50])
+{
+    for(int i = 0; i < strlen(email); i++){
+        if(email[i] == '@') { // Corrected assignment (=) to comparison (==)
+            username[i] = '\0'; // Ensure username is null-terminated
+            break;
+        }
+        else username[i] = email[i];
+    }
+}
+
+void takepassword(char pwd[50])
+{
+    int i = 0;
+    char ch;
+    initscr(); // Initialize ncurses mode
+    noecho(); // Do not echo pressed keys to the screen
+    while(1)
+    {
+        ch = getch(); // Get character without echoing
+        if(ch == ENTER || ch == TAB)
+        {
+            pwd[i] = '\0';
+            break;
+        }
+        else if(ch == BCKSPC)
+        {
+            if(i > 0)
+            {
+                i--;
+                printw("\b \b"); // Use printw in ncurses
+            }
+        }
+        else
+        {
+            if(i < 49) { // Prevent buffer overflow
+                pwd[i++] = ch;
+                printw("*"); // Print * for each character
+            }
+        }
+    }
+    echo(); // Turn echo back on
+    endwin(); // End ncurses mode
+}
+
+int main()
+{   
+    printf("\033[1;94m");
+    int opt;
+    struct user user;
+    printf("\n\t\t\t\t---------------WELCOME TO LOGIN PAGE---------------\n\n");
+    printf("\nPlease choose an option:\n");
+    printf("1. Signup\n");
+    printf("2. Login\n");
+    printf("3. Exit\n");
+
+    printf("\nEnter your choice:\t");
+    scanf("%d", &opt);
+    getchar(); // Use getchar to consume the newline
+
+    switch(opt)
+    {
+        case 1:
+        printf("Enter your full name:\t");
+        takeinput(user.fullName);
+        printf("Enter your email:\t");
+        takeinput(user.email);
+        generateUsername(user.email, user.username); // Generate username from email
+        printf("Your username is: %s\n", user.username); // Display generated username
+        printf("Enter your contact no:\t");
+        takeinput(user.phone);
+        printf("Enter your password:\t");
+        takepassword(user.password);
+        break;
+    }
+}
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ncurses.h>
+#define ENTER 13
+#define TAB 9
+#define BCKSPC 8
+
+struct user{
+    char fullName[50];
+    char email[50];
+    char username[50];
+    char password[50];
+    char phone[50];
+};
+
+void takeinput(char ch[50])
+{
+    fgets(ch, 50, stdin);
+    size_t len = strlen(ch);
+    if(len > 0 && ch[len-1] == '\n')
+    {
+        ch[--len] = '\0'; //remove newline character because the string is large enough so fgets will include the new line also and put the NULL terminate character after new line
+    }
+}
+void generateUsername(char email[50], char username[50])
+{   
+    int i;
+    //abc123@gmail.com
+    for(i = 0; i < strlen(email); i++){
+        if(email[i] == '@') break;
+        else username[i] = email[i];
+    }
+    username[i] = '\0'; //effectively terminate the string
+}
+
+void takepassword(char pwd[50])
+{
+    int i = 0;
+    char ch;
+    while(1)
+    {
+        ch = getch();
+        if(ch == ENTER || ch == TAB)
+        {
+            pwd[i] = '\0';
+            break; //read character by character until enter or tab is pressed
+        }
+        else if(ch == BCKSPC)
+        {
+            if(i > 0)
+            {
+                i--;
+                printf("\b \b");
+            }
+        }
+        else
+        {
+            if(i < 50)
+            {
+                pwd[i] = ch;
+                i++;
+                printf("* \b");
+            }
+        }
+    }
+}
+
+
+void login()   
+{
+    printf("\033[1;94m");
+    int opt;
+    struct user user;
+    printf("\n\t\t\t\t---------------WELCOME TO LOGIN PAGE---------------\n\n");
+    printf("\nPlease choose an option:\n");
+    printf("1. Signup\n");
+    printf("2. Login\n");
+    printf("3. Exit\n");
+
+    printf("\nEnter your choice:\t");
+    scanf("%d", &opt);
+    fgetc(stdin); //to clear the newline
+
+    switch(opt)
+    {
+        case 1:
+        printf("Enter your full name:\t");
+        takeinput(user.fullName);
+        printf("Enter your email:\t");
+        takeinput(user.email);
+        printf("Enter your contact no:\t");
+        takeinput(user.phone);
+        printf("Enter your password:\t");
+        takepassword(user.password);
+    }
+}
+ // printf the bar chart of each day
+    bool yN = YN("Do you want to see the statistic in form of bar chart?");
+    if (yN == true)
+    {
+        printf("\033[2J\033[H");
+        printf("\n");
+        for (int i = start; i < end; i++)
+        {
+            for (int j = 0; j < 1; j++)
+            {
+                printf("│\n");
+                printf("│\n");
+                printf("│\n");
+            }
+        }
+        printf("└");
+        for (int i = start; i < end; i++)
+        {
+            printf("──────────────────");
+        }
+        printf("\033[1A");
+        printf("\033[125D");
+        // print bar
+        for (int k = start; k < end; k++)
+        {
+            for (int j = 0; j < payDays[k] / 100000; j++)
+            {
+                for (int i = 0; i < 1; i++)
+                {
+                    printf("█");
+                }
+                printf("\033[1A");
+                printf("\033[1D");
+            }
+            printf("\033[2C");
+            printf("\033[%dB", (int)payDays[k] / 100000);
+        }
+        printf("\n\n\n\n\n\n\n");
+    }
+}
+if (yN == true)
+    {
+        printf("\033[2J\033[H");
+        int maxBarHeight = 15;
+        int barWidth = 5;
+        printf("\n\n\n");
+        drawBar(maxBarHeight, barWidth, payDays, start, end, listFiles);
+        getchar();
+    }
+}
+void drawBar(int maxBarHeight, int barWidth, float payDays[], int start, int end, char listFiles[][MAX])
+{
+    for (int i = 0; i < maxBarHeight; i++)
+    {
+        for (int j = start; j < end; j++)
+        {
+            if (payDays[j] / 120000 * maxBarHeight >= maxBarHeight - i)
+            {
+                printf("\t");
+                for (int w = 0; w < barWidth; w++)
+                {
+                    printf("█");
+                }
+            }
+            else
+            {
+                for (int w = 0; w < barWidth; w++)
+                {
+                    printf(" ");
+                }
+            }
+            printf("         "); // Space between bars
+        }
+        printf("\n");
+    }
+    printf("\n");
+    for (int i = start; i < end; i++)
+    {
+        printf("      %s", listFiles[i]);
+    }
+    printf("\n");
+    for (int i = 0; i < maxBarHeight + 2; i++)
+    {
+        printf("│");
+        printf("\033[4D");
+        printf("\033[1A");
+    }
+    printf("\t");
+    for (int j = start; j < end; j++)
+    {
+        float currentBarHeight = payDays[j] / 120000 * maxBarHeight;
+        if((int)currentBarHeight - maxBarHeight == 0)
+        {
+            printf("%.0f", payDays[j]);
+            printf("\033[%dD", countDigits((int)payDays[j]));
+            printf("      ");
+            continue;
+        }
+        printf("\033[%dB%.0f",maxBarHeight - (int)currentBarHeight, payDays[j]);
+        printf("\033[%dD", countDigits((int)payDays[j]));
+        printf("\033[%dA", maxBarHeight - (int)currentBarHeight);
+        printf("      ");
+    }

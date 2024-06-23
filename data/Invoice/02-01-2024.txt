@@ -1,0 +1,11 @@
+State: Ended
+TS code: 20240102
+Bill ID: 120240102
+               FID		           Food😋	              Price	          Quantity	           Unit	        Payment
+                15		           Fish🐟	              20000	              1	               Dish	          20000
+                 1		           Cake🍰	              12000	              1	               Dish	          12000
+                32		     Curry Rice🍛	              32000	              1	               Dish	          32000
+                                                                                              Total:           64000
+                                                                                               Sale:               0
+                                                                                            Payment:           64000
+                                                                                             Status:            Paid

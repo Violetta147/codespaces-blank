@@ -1,0 +1,11 @@
+State: Ended
+TS code: 20240103
+Bill ID: 120240103
+               FID		           Food😋	              Price	          Quantity	           Unit	        Payment
+                 3		          Mixao🍝	              20000	              1	               Dish	          20000
+                 4		       MilkyWay🌌	              15000	              1	                Cup	          15000
+                 5		          Bento🍱	              20000	              1	                Box	          20000
+                                                                                              Total:           55000
+                                                                                               Sale:               0
+                                                                                            Payment:           55000
+                                                                                             Status:            Paid
