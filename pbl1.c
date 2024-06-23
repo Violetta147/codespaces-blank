@@ -193,7 +193,7 @@ void delete_order_item(int ordi);
 void show_bill();
 
 void stat();
-void drawBar(int maxBarHeight, int barWidth, float payDays[], int start, int end, char listFiles[][MAX]);
+void drawBar(float payDay, char listFile[]);
 int countDigits(int n);
 
 int main(void)
@@ -2177,16 +2177,15 @@ void stat()
     }
     // if day range is wrong
     if (start == end + 1)
-    {
+    {   
         return;
     }
-    else if (start == end & start == - 1 & end == -1)
-    {
+    else if (start == - 1 & end == -1)
+    {   
         return;
     }
     float payDays[MAX] = {0};
-    // Bills* invoiceBarChart;
-    for (int i = start; i < end; i++)
+    for (int i = start; i <= end; i++)
     {
         char filename[MAX_PATH_LENGTH];
         strcpy(filename, filePath);
@@ -2197,39 +2196,11 @@ void stat()
             continue;
         }
         char buffer[1000];
-        Invoice.count = 0;
-        Invoice.gain = 0;
         fscanf(invoice, "State: %s\n", Invoice.state);
         fscanf(invoice, "TS code: %s\n", Invoice.TsCode);
-
-        while (fscanf(invoice, "Bill ID: %s\n", Invoice.order[Invoice.count].BID) == 1)
-        {
-            fgets(buffer, sizeof(buffer), invoice);
-            while (fscanf(invoice, FORMATTED_READ_BILLS,
-                          &Invoice.order[Invoice.count].items[Invoice.order[Invoice.count].total].dish.FID,
-                          Invoice.order[Invoice.count].items[Invoice.order[Invoice.count].total].dish.Name,
-                          &Invoice.order[Invoice.count].items[Invoice.order[Invoice.count].total].dish.Price,
-                          &Invoice.order[Invoice.count].items[Invoice.order[Invoice.count].total].quantity,
-                          Invoice.order[Invoice.count].items[Invoice.order[Invoice.count].total].dish.Unit,
-                          &Invoice.order[Invoice.count].items[Invoice.order[Invoice.count].total].cash) == 6)
-            {
-                Invoice.order[Invoice.count].total++;
-            }
-            fgets(buffer, sizeof(buffer), invoice);
-            sscanf(buffer, "%*100s%16f", &Invoice.order[Invoice.count].sum);
-            fgets(buffer, sizeof(buffer), invoice);
-            sscanf(buffer, "%*100s%16f", &Invoice.order[Invoice.count].sale);
-            fgets(buffer, sizeof(buffer), invoice);
-            sscanf(buffer, "%*100s%16f", &Invoice.order[Invoice.count].pay);
-            fgets(buffer, sizeof(buffer), invoice);
-            sscanf(buffer, "%*100s%16s", Invoice.order[Invoice.count].status);
-            Invoice.gain += Invoice.order[Invoice.count].pay;
-            Invoice.count++;
-        }
-        fclose(invoice);
+        daily_bills(invoice);
         payDays[i] = Invoice.gain;
-        // invoiceBarChart = (Bills*)malloc(sizeof(Bills) * (end - start));
-        // invoiceBarChart[i] = Invoice;
+        fclose(invoice);
         memset(&Invoice, 0, sizeof(Invoice));
     }
     // print the statistic
@@ -2242,14 +2213,14 @@ void stat()
     {
         listFiles[i][strlen(listFiles[i]) - 4] = '\0';
     }
-    for (int i = start; i < end; i++)
+    for (int i = start; i <= end; i++)
     {
         printf("The total gain of day %s is %20.0f VND\n", listFiles[i], payDays[i]);
     }
     printf("\n");
     printf("──────────────────────────────────────────────────────────────────────────────────────────");
     float total = 0;
-    for (int i = start; i < end; i++)
+    for (int i = start; i <= end; i++)
     {
         total += payDays[i];
     }
@@ -2259,65 +2230,37 @@ void stat()
     if (yN == true)
     {
         printf("\033[2J\033[H");
-        int maxBarHeight = 15;
-        int barWidth = 5;
-        printf("\n\n\n");
-        drawBar(maxBarHeight, barWidth, payDays, start, end, listFiles);
+        printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+        for(int i = start; i <= end; i++)
+        {       
+            drawBar(payDays[i], listFiles[i]);
+            printf("\t\t");
+        }
         getchar();
     }
 }
-void drawBar(int maxBarHeight, int barWidth, float payDays[], int start, int end, char listFiles[][MAX])
+void drawBar(float payDay, char listFile[])
 {
-    for (int i = 0; i < maxBarHeight; i++)
+    int maxBarHeight = 5;
+    int barWith = 5;
+    int barHeight = (payDay / 120000) * maxBarHeight;
+    printf("\033[s");
+    printf("\033[%dB", maxBarHeight);
+    printf("%s", listFile);
+    printf("\033[%ldD", strlen(listFile) / 2 + 3);
+    printf("\033[1A");
+    for(int i = 0; i < barHeight; i++)
     {
-        for (int j = start; j < end; j++)
+        for(int j = 0; j < barWith; j++)
         {
-            if (payDays[j] / 120000 * maxBarHeight >= maxBarHeight - i)
-            {
-                printf("\t");
-                for (int w = 0; w < barWidth; w++)
-                {
-                    printf("█");
-                }
-            }
-            else
-            {
-                for (int w = 0; w < barWidth; w++)
-                {
-                    printf(" ");
-                }
-            }
-            printf("         "); // Space between bars
+            printf("█");
         }
-        printf("\n");
-    }
-    for (int i = start; i < end; i++)
-    {
-        printf("      %s", listFiles[i]);
-    }
-    printf("\n");
-    for (int i = 0; i < maxBarHeight + 2; i++)
-    {
-        printf("│");
-        printf("\033[4D");
+        printf("\033[%dD", barWith);
         printf("\033[1A");
     }
-    printf("\t");
-    for (int j = start; j < end; j++)
-    {
-        float currentBarHeight = payDays[j] / 120000 * maxBarHeight;
-        if((int)currentBarHeight - maxBarHeight == 0)
-        {
-            printf("%.0f", payDays[j]);
-            printf("\033[%dD", countDigits((int)payDays[j]));
-            printf("      ");
-            continue;
-        }
-        printf("\033[%dB%.0f",maxBarHeight - (int)currentBarHeight, payDays[j]);
-        printf("\033[%dD", countDigits((int)payDays[j]));
-        printf("\033[%dA", maxBarHeight - (int)currentBarHeight);
-        printf("      ");
-    }
+    printf("%.0f\n", payDay);
+    printf("\033[u");
+    
 }
 int countDigits(int n)
 {
